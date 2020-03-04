@@ -1,42 +1,51 @@
 package main
 
 import (
-        "time"
-
-        "gobot.io/x/gobot"
-        "gobot.io/x/gobot/drivers/gpio"
-        "gobot.io/x/gobot/platforms/firmata"
-        "github.com/alwindoss/morse"
-        "strings"
-		"fmt"
-		"io/ioutil"
+	"fmt"
+	"io/ioutil"
+	"strings"
+	"time"
+	"github.com/alwindoss/morse"
+	"gobot.io/x/gobot"
+	"gobot.io/x/gobot/drivers/gpio"
+	"gobot.io/x/gobot/platforms/firmata"
 )
 
 func main() {
-        firmataAdaptor := firmata.NewAdaptor("/dev/cu.usbmodem141401")
-        led := gpio.NewLedDriver(firmataAdaptor, "13")
-
-        work := func() {
-                gobot.Every(5*time.Second, func() {
-                        led.Toggle()
-                })
-        }
-
-        robot := gobot.NewRobot("bot",
-                []gobot.Connection{firmataAdaptor},
-                []gobot.Device{led},
-                work,
-        )
-
-        robot.Start()
-        h := morse.NewHacker()
-	morseCode, err := h.Encode(strings.NewReader("Convert this to Morse"))
+	h := morse.NewHacker()
+	morseCode, err := h.Encode(strings.NewReader("Hello from Arduino"))
 	if err != nil {
 		return
 	}
-	// Morse Code is: -.-. --- ...- . .-. - / - .... .. ... / - --- / -- --- .-. ... .
-	fmt.Printf("Abhishek: %s\n", string(morseCode))
-	writeFile("morse.txt", string(morseCode))
+	// morseTest := "-.-. --- ...- . .-. - / - .... .. ... / - --- / -- --- .-. ... ."
+	lettersAndSpaces := strings.ReplaceAll(string(morseCode), " - / -", "")
+	lettersOnly := strings.ReplaceAll(lettersAndSpaces, " ", "")
+	fmt.Printf("Morse Translation: %s\n", string(lettersOnly))
+	writeFile("morse.txt", string(lettersOnly))
+
+	firmataAdaptor := firmata.NewAdaptor("/dev/cu.usbmodem142401")
+	led := gpio.NewLedDriver(firmataAdaptor, "13")
+
+	work := func() {
+		for a := 0; a < len(lettersOnly); a++ {
+			if string(lettersOnly[a]) == "." {
+				gobot.Every(1*time.Second, func() {
+					led.Toggle()
+				})
+			} else {
+				gobot.Every(3*time.Second, func() {
+					led.Toggle()
+				})
+			}
+		    }
+	}
+
+	robot := gobot.NewRobot("bot",
+		[]gobot.Connection{firmataAdaptor},
+		[]gobot.Device{led},
+		work,
+	)
+	robot.Start()
 
 }
 
