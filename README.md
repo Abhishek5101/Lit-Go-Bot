@@ -8,6 +8,9 @@ Using Go lang with Arduino to convert text to Morse code and transmit it with LE
 
 ![Int'l Morse Code](https://raw.githubusercontent.com/Abhishek5101/Lit-Go-Bot/master/colored_morse_code.jpg)
 
+### Presentation slides
+[Morse Code](https://docs.google.com/presentation/d/19pMEI79wN8EOLtRxAUrVsAwAV1u26ckRt4PgVCkrl90/edit?usp=sharing)
+
 ## Install
 This package has the following requirements:
 *  Gobot
