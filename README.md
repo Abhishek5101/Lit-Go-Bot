@@ -4,9 +4,9 @@
 ## Purpose
 Using Go lang with Arduino to convert text to Morse code and transmit it with LEDs
 
-![Project Picture](https://ibb.co/BCLkH4k)
+![Project Picture](https://raw.githubusercontent.com/Abhishek5101/Lit-Go-Bot/master/project_picture.jpg)
 
-![Int'l Morse Code](https://ibb.co/Qc5jxQX)
+![Int'l Morse Code](https://raw.githubusercontent.com/Abhishek5101/Lit-Go-Bot/master/colored_morse_code.jpg)
 
 ## Install
 This package has the following requirements:
