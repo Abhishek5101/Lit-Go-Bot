@@ -24,3 +24,7 @@ This package has the following requirements:
 * This program  assumes your LED is connected to Pin 13
 * From your Aruino IDE, upload the already available standard Firmata sketch
 * Then run this program
+
+## 📝 License
+
+By contributing, you agree that your contributions will be licensed under its MIT License.
